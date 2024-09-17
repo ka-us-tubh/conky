@@ -1,0 +1,125 @@
+double_buffer yes
+background yes
+
+own_window yes
+
+xinerama_head 2
+
+# own_window_type desktop
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+#own_window_type override
+own_window_argb_visual yes
+own_window_argb_value 178
+out_to_console no
+own_window_transparent no
+own_window_class conky-semi
+use_xft yes
+xftfont cure:size=10
+
+#use_xft yes
+#xftfont Sansation:size=9
+xftfont Rounded Elegance:size=10
+xftalpha 0
+update_interval 2
+cpu_avg_samples 2
+net_avg_samples 2
+double_buffer yes
+maximum_width 320
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+stippled_borders 1
+border_width 0
+default_color green
+default_shade_color white
+default_outline_color white
+alignment top_right
+
+use_spacer left
+no_buffers yes
+uppercase no
+
+
+pad_percents 2
+top_name_width 10
+minimum_size 440 140
+gap_x 60
+gap_y 35
+
+own_window_colour 073642
+TEXT
+${image img/logo.png -p 0,0 -s 30x30}
+${offset 35}${font Good Times:size=12}${color Tan1}${nodename}${color}${hr 2}${font}
+${color Tan1}${font Ubuntu-Title:size=10}OS:${font}${color}${alignr}${execi 999999 lsb_release -ds}
+${color Tan1}${font Ubuntu-Title:size=10}Kernel:${font}${color} $alignr}$kernel
+#${color Tan1}${font Ubuntu-Title:size=10}Machine:${font}${color} ${alignr}$machine
+${color Tan1}${font Ubuntu-Title:size=10}User:${font}${color} ${alignr}${execi 60 whoami}
+${color Tan1}${font Ubuntu-Title:size=10}System Uptime :${font}${color}${alignr}$uptime
+#${color Tan1}${font Ubuntu-Title:size=10}System Updates:${color}${font}${alignr} ${execi 3600 aptitude search "~U" | wc -l | tail}${font}
+${color Tan1}${font Ubuntu-Title:size=10}Packages:${color} ${alignr}${execi 900 dpkg -l | grep -c ^i} Installed
+#${color Tan1}${font Ubuntu-Title:size=10}Firewall Status:${color}${font}${alignr}${execi 45 sudo ufw status | grep -i Status | awk '{print $2}'}
+${if_up wlo1}${color Tan1}${font Ubuntu-Title:size=10}VPN Status:${color}${font}${alignr}${color green}Active${color}${else}${color Tan1}${font Ubuntu-Title:size=10}VPN Status:${color}${font}${alignr}${color red}Inactive${color}${endif}
+${font Good Times:size=12}${color Tan1}Processes${font}${color}${hr 2}${Voffset 5}
+#${color Tan1}Processes:${color} $processes${offset 5}${alignr}${color Tan1}Running:${color}$running_processes
+#${color Tan1}Threads:${color} $threads${offset 5}${alignr}${color Tan1}Running${color}$running_threads
+#${running_processes} ${running_threads} ${processes}
+#${stippled_hr 1}${font}
+${color lightgrey}${font Futurist Fixed-width:size=10:bold}${color Tan1}${offset 5}PROCESS                       CPU${alignr}MEMORY        ${offset -5}PID${font}
+${voffset -10}${hr 1}${font}${color}${font monofur:size=11}
+${voffset -5}#
+${offset 5}${top name 1} ${alignr}${top cpu 1}%      ${top mem_res 1}     ${alignr}${offset -5}${top pid 1}
+${offset 5}${top name 2} ${alignr}${top cpu 2}%      ${top mem_res 2}     ${alignr}${offset -5}${top pid 2}
+${offset 5}${top name 3} ${alignr}${top cpu 3}%      ${top mem_res 3}     ${alignr}${offset -5}${top pid 3}
+#${offset 5}${top name 4} ${alignr}${top cpu 4}%      ${top mem_res 4}     ${alignr}${offset -5}${top pid 4}
+#${offset 5}${top name 5} ${alignr}${top cpu 5}%      ${top mem_res 5}     ${alignr}${offset -5}${top pid 5}${font}
+${font Good Times:size=12}${color Tan1}Memory${font}${color}${hr 2}
+${voffset 5}${color Tan1}RAM:${color} $memmax${alignr}${color Tan1}Cached:${color} ${cached}
+${voffset 3}${membar 8 325}
+${voffset 3}${color Tan1}Ram Used:${color} ${mem used}${alignr}${color Tan1}Ram Free:${color} ${memeasyfree}
+${voffset -18}
+${font Good Times:size=12}${color Tan1}CPU${color}${font}${hr 2}
+#${voffset 5}${alignc}${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq}${voffset 11}
+${voffset 5}${color Tan1}Temperature:${color}${texeci 10 sensors | grep temp | awk '!/-/' | awk '{ print $2}' | sort -r | head -n 1}${font}${alignr}${color Tan1}FREQ${color} ${color} ${freq_g (0)}GHz 
+${voffset 5}${color Tan1}CPU${color} ${color} ${cpu cpu0}% ${color green}${cpubar cpu0 10,255}
+${voffset 5}${cpugraph cpu1 50,80}${cpugraph cpu2 50,80}${cpugraph cpu3 50,80}${cpugraph cpu4 50,80}${voffset -15}
+${cpugraph cpu5 50,80}${cpugraph cpu6 50,80}${cpugraph cpu7 50,80}${cpugraph cpu8 50,80}
+${font Ubuntu:size=10}${voffset -105}${color Tan1}${goto 30}1 ${goto 110}2 ${goto 190}3 ${goto 270}4 ${goto 0} ${voffset 50} ${goto 30}5 ${goto 110}6 ${goto 190}7 ${goto 270}8
+#${font Ubuntu:size=8}${voffset -53}${color Tan1}${goto 35}${freq_g (1)}GHz ${goto 115}${freq_g (2)}GHz ${goto 195}${freq_g (3)}GHz ${goto 275}${freq_g (4)}GHz ${goto 0}${voffset 50}${goto #35}${freq_g (5)}GHz ${goto 115}${freq_g (6)}GHz ${goto 195}${freq_g (7)}GHz ${goto 275}${freq_g (8)}GHz
+${voffset 12}
+${font Good Times:size=12}${color Tan1}GPU ${font}${color}${hr 2}
+# GPU Utilization
+${color Tan1}GPU Utilization:${color}${alignr}${execi 2 nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader}
+${color}${execibar 2 nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader}
+# GPU Temperature
+${color Tan1}GPU Temperature:${color}${alignr}${execi 2 nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader}°C
+#${color}${execibar 2 nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader}
+# GPU Power Consumption
+${color Tan1}Power Consumption:${color}${alignr}${execi 2 nvidia-smi --query-gpu=power.draw --format=csv,noheader} 
+#${color}${execibar 2 nvidia-smi --query-gpu=power.draw --format=csv,noheader}
+# GPU Clock Speeds
+${color Tan1}Core Clock:${color}${alignr}${execi 2 nvidia-smi --query-gpu=clocks.gr --format=csv,noheader} 
+#${color Tan1}Memory Clock:${color}${alignr}${execi 2 nvidia-smi --query-gpu=clocks.mem --format=csv,noheader}
+# GPU Memory Usage
+${color Tan1}Memory Usage:${color}${alignr}${execi 2 nvidia-smi --query-gpu=memory.used --format=csv,noheader} / ${execi 2 nvidia-smi --query-gpu=memory.total --format=csv,noheader} 
+# Network Information Section
+${font Good Times:size=12}${color Tan1}Network${font}${color}${hr 2}
+${voffset 5}${color Tan1}Interface:${color} ${alignr}${color}wlo1
+${color Tan1}Local IP:${color} ${alignr}${addr wlo1}
+${color Tan1}Download Speed:${color} ${alignr}${downspeed wlo1}/s
+${downspeedgraph wlo1 20,305 ff0000 00ff00}
+${color Tan1}Upload Speed:${color} ${alignr}${upspeed wlo1}/s
+${upspeedgraph wlo1 20,305 00ff00 ff0000}
+${font Good Times:size=12}${color Tan1}Drives${font}${color}${hr 2}
+${color Tan1}Root:${color}${alignr}${fs_size /}
+${voffset 5}${fs_bar /}
+${color Tan1}Space Used:${color} ${fs_used /}${alignr}${color Tan1}Space Free:${color} ${fs_free /}
+${if_mounted /media/turtle/Storage}
+${color Tan1}USB:${color}${alignr}${fs_size /media/turtle/Storage}
+${fs_bar /media/turtle/Storage}
+${color Tan1}Space Used:${color} ${fs_used /media/turtle/Storage}${alignr}${color Tan1}Space Free:${color} ${fs_free /media/turtle/Storage}${endif}
+${if_mounted /media/turtle/Backups-XXL}
+${color Tan1}USB:${color}${alignr}${fs_size /media/turtle/Backups-XXL}
+${fs_bar /media/turtle/Backups-XXL}
+${color Tan1}Space Used:${color} ${fs_used /media/turtle/Backups-XXL}${alignr}${color Tan1}Space Free:${color} ${fs_free /media/turtle/Backups-XXL}
+${endif}
